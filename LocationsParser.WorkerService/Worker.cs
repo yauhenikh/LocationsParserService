@@ -15,12 +15,16 @@ namespace LocationsParser.WorkerService
     {
         private readonly ILogger<Worker> _logger;
         private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly WorkerSettings _settings;
+        private const int DelayMillisecondsDefault = 10 * 60 * 1000;
 
         public Worker(ILogger<Worker> logger,
-                      IServiceScopeFactory serviceScopeFactory)
+                      IServiceScopeFactory serviceScopeFactory,
+                      WorkerSettings settings)
         {
             _logger = logger;
             _serviceScopeFactory = serviceScopeFactory;
+            _settings = settings;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -31,6 +35,9 @@ namespace LocationsParser.WorkerService
 
                 try
                 {
+                    if (_settings.DelayMilliseconds == 0)
+                        _settings.DelayMilliseconds = DelayMillisecondsDefault;
+
                     using (var scope = _serviceScopeFactory.CreateScope()) // for creating scoped service
                     {
                         var locationsService = scope.ServiceProvider.GetRequiredService<ILocationsService>();
@@ -43,7 +50,7 @@ namespace LocationsParser.WorkerService
                     _logger.LogError(ex, $"{nameof(Worker)}.{nameof(ExecuteAsync)} threw an exception.");
                 }
 
-                await Task.Delay(10000, stoppingToken);
+                await Task.Delay(_settings.DelayMilliseconds, stoppingToken);
             }
         }
     }
