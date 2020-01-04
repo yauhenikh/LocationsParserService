@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LocationsParser.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Extensions.Logging;
 
 namespace LocationsParser.WorkerService
 {
@@ -12,7 +16,15 @@ namespace LocationsParser.WorkerService
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var logger = LogManager.GetCurrentClassLogger();
+            try
+            {
+                CreateHostBuilder(args).Build().Run();
+            }
+            finally
+            {
+                LogManager.Shutdown();
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -22,6 +34,18 @@ namespace LocationsParser.WorkerService
                     services.AddDbContext(hostContext.Configuration);
                     services.AddScoped<ILocationsService, LocationsFileService>();
                     services.Configure<LocationsFileServiceConfiguration>(hostContext.Configuration.GetSection("LocationsFileServiceConfiguration"));
+
+                    services.AddLogging(logging =>
+                    {
+                        logging.ClearProviders();
+                        logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                        logging.AddNLog();
+                    });
+
+                    var workerSettings = new WorkerSettings();
+                    hostContext.Configuration.Bind(nameof(WorkerSettings), workerSettings);
+                    services.AddSingleton(workerSettings);
+
                     services.AddHostedService<Worker>();
                 });
     }

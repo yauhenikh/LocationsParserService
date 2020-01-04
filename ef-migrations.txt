@@ -1,0 +1,3 @@
+-- run from LocationsParser.WorkerService project folder
+dotnet ef migrations add InitialCreate --context appdbcontext -p ../LocationsParser.DataAccess/LocationsParser.DataAccess.csproj -s LocationsParser.WorkerService.csproj -o Data/Migrations
+dotnet ef database update
