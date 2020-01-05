@@ -12,7 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sln", "sln", "{0A847C99-239
 		ef-migrations.txt = ef-migrations.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationsParser.Services", "LocationsParser.Services\LocationsParser.Services.csproj", "{6BD770C4-7F00-4EC6-81A7-D514F3B96E95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocationsParser.Services", "LocationsParser.Services\LocationsParser.Services.csproj", "{6BD770C4-7F00-4EC6-81A7-D514F3B96E95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationsParser.Tests", "LocationsParser.Tests\LocationsParser.Tests.csproj", "{E162D894-BA7E-4883-8668-D25995DE9213}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{6BD770C4-7F00-4EC6-81A7-D514F3B96E95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BD770C4-7F00-4EC6-81A7-D514F3B96E95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BD770C4-7F00-4EC6-81A7-D514F3B96E95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E162D894-BA7E-4883-8668-D25995DE9213}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E162D894-BA7E-4883-8668-D25995DE9213}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E162D894-BA7E-4883-8668-D25995DE9213}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E162D894-BA7E-4883-8668-D25995DE9213}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
